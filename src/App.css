@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+:root {
+  --black: #080c08;
+  --deep-green: #0e1a0e;
+  --moss: #1e3320;
+  --forest: #2d4a2d;
+  --stone: #3a3a32;
+  --parchment: #c8b89a;
+  --gold: #c8922a;
+  --gold-light: #e8b86d;
+  --crimson: #6b1c1c;
+  --mist: rgba(180, 200, 170, 0.06);
+  --text-main: #d4cbbf;
+  --text-dim: #7a7060;
+}
+
+#root {
+  height: 100vh;
+  width: 100%;
+  background:
+    radial-gradient(
+      ellipse 60% 60% at 0% 50%,
+      rgba(30, 51, 32, 0.3) 0%,
+      transparent 70%
+    ),
+    var(--deep-green);
+}
+
+#hero {
+  /* background: radial-gradient(ellipse 80% 60% at 50% 70%, rgba(30,51,32,0.5) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 90%, rgba(45,74,45,0.3) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 80% 90%, rgba(45,74,45,0.2) 0%, transparent 60%),
+        var(--black) */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--black);
+  color: var(--text-main);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  /* cursor: none; */
+  overflow-x: hidden;
+}
+
+/* ── Custom Cursor ── */
+/* #cursor {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.2s,
+    height 0.2s,
+    background 0.2s;
+  mix-blend-mode: screen;
+}
+#cursor-ring {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(200, 146, 42, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition:
+    transform 0.08s linear,
+    width 0.2s,
+    height 0.2s;
+}
+body:hover #cursor {
+  opacity: 1;
+} */
+
+/* ── Grain Overlay ── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 9000;
+}

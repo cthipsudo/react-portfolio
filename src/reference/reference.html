@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Chronicle — Fullstack Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+  <style>
+    :root {
+      --black:       #080c08;
+      --deep-green:  #0e1a0e;
+      --moss:        #1e3320;
+      --forest:      #2d4a2d;
+      --stone:       #3a3a32;
+      --parchment:   #c8b89a;
+      --gold:        #c8922a;
+      --gold-light:  #e8b86d;
+      --crimson:     #6b1c1c;
+      --mist:        rgba(180,200,170,0.06);
+      --text-main:   #d4cbbf;
+      --text-dim:    #7a7060;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--text-main);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      cursor: none;
+      overflow-x: hidden;
+    }
+
+    /* ── Custom Cursor ── */
+    #cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width .2s, height .2s, background .2s;
+      mix-blend-mode: screen;
+    }
+    #cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(200,146,42,0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform .08s linear, width .2s, height .2s;
+    }
+    body:hover #cursor { opacity: 1; }
+
+    /* ── Grain Overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.035;
+      pointer-events: none;
+      z-index: 9000;
+    }
+
+    /* Stop */
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.8rem 4rem;
+      background: linear-gradient(to bottom, rgba(8,12,8,0.9) 0%, transparent 100%);
+    }
+    .nav-sigil {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.85rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+
+    /* ── Intertitle ── */
+    .intertitle {
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 8000;
+      pointer-events: none;
+    }
+    .intertitle span {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1rem, 3vw, 1.6rem);
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--text-main);
+    }
+
+    /* ── Sections ── */
+    section {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* ── Hero ── */
+    #hero {
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 70%, rgba(30,51,32,0.5) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 90%, rgba(45,74,45,0.3) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 80% 90%, rgba(45,74,45,0.2) 0%, transparent 60%),
+        var(--black);
+    }
+
+    /* Mist layers */
+    .mist-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .mist-blob {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      will-change: transform;
+    }
+    .mist-blob-1 {
+      width: 75vw; height: 45vh;
+      background: radial-gradient(ellipse at center, rgba(80,140,80,0.28) 0%, rgba(50,100,50,0.12) 40%, transparent 70%);
+      filter: blur(55px);
+      bottom: 5%; left: -15%;
+    }
+    .mist-blob-2 {
+      width: 55vw; height: 38vh;
+      background: radial-gradient(ellipse at center, rgba(60,110,70,0.22) 0%, rgba(40,80,50,0.10) 40%, transparent 70%);
+      filter: blur(65px);
+      bottom: 12%; right: -10%;
+    }
+    .mist-blob-3 {
+      width: 65vw; height: 50vh;
+      background: radial-gradient(ellipse at center, rgba(180,210,175,0.10) 0%, rgba(140,180,140,0.05) 40%, transparent 70%);
+      filter: blur(90px);
+      bottom: 25%; left: 10%;
+    }
+    .mist-blob-4 {
+      width: 40vw; height: 30vh;
+      background: radial-gradient(ellipse at center, rgba(100,160,90,0.18) 0%, transparent 65%);
+      filter: blur(50px);
+      top: 30%; left: 35%;
+    }
+
+    /* Vignette */
+    .vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 90% 90% at 50% 50%, transparent 40%, rgba(8,12,8,0.85) 100%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    .hero-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.6rem, 1.2vw, 0.75rem);
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      opacity: 0;
+    }
+    .hero-name {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(2.5rem, 8vw, 7rem);
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      text-shadow: 0 0 80px rgba(200,146,42,0.15);
+    }
+    .hero-title {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.6rem);
+      color: var(--parchment);
+      opacity: 0.7;
+      margin-bottom: 3.5rem;
+      opacity: 0;
+    }
+
+    /* Gold ornament divider */
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 0 auto 3rem;
+      opacity: 0;
+    }
+    .ornament-line {
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+    .ornament-diamond {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      transform: rotate(45deg);
+    }
+
+    .hero-cta {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      border: 1px solid rgba(200,146,42,0.4);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      transition: background 0.4s, color 0.4s, border-color 0.4s;
+      opacity: 0;
+    }
+    .hero-cta:hover {
+      background: rgba(200,146,42,0.1);
+      border-color: var(--gold-light);
+      color: #fff;
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+    }
+    .scroll-hint span {
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse { 0%,100% { opacity: 0.4; transform: scaleY(1); } 50% { opacity: 1; transform: scaleY(1.1); } }
+
+    /* ── Section Intertitle Banners ── */
+    .section-header {
+      text-align: center;
+      width: 100%;
+      padding: 2rem 0 4rem;
+    }
+    .section-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.6em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'IM Fell English', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      color: var(--text-main);
+      font-weight: 400;
+    }
+    .section-rule {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .section-rule-line {
+      width: 80px; height: 1px;
+      background: linear-gradient(to right, transparent, rgba(200,146,42,0.5));
+    }
+    .section-rule-line.rev {
+      background: linear-gradient(to left, transparent, rgba(200,146,42,0.5));
+    }
+    .section-rule-dot {
+      width: 4px; height: 4px;
+      background: var(--gold);
+      transform: rotate(45deg);
+    }
+
+    /* ── About ── */
+    #about {
+      background:
+        radial-gradient(ellipse 60% 60% at 0% 50%, rgba(30,51,32,0.3) 0%, transparent 70%),
+        var(--deep-green);
+      padding: 8rem 4rem;
+    }
+    .about-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8rem;
+      align-items: center;
+    }
+    .about-portrait {
+      position: relative;
+    }
+    .portrait-frame {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background:
+        linear-gradient(160deg, rgba(45,74,45,0.6) 0%, rgba(14,26,14,0.9) 100%);
+      border: 1px solid rgba(200,146,42,0.2);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .portrait-frame::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(200,146,42,0.1);
+    }
+    .portrait-placeholder {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 5rem;
+      color: rgba(200,146,42,0.15);
+      user-select: none;
+    }
+    .portrait-caption {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 0; right: 0;
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .about-text p {
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      line-height: 1.9;
+      color: var(--text-main);
+      margin-bottom: 1.8rem;
+    }
+    .about-text p:first-of-type::first-letter {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 3.5rem;
+      float: left;
+      line-height: 0.8;
+      margin: 0.1em 0.15em 0 0;
+      color: var(--gold);
+    }
+
+    /* ── Armoury ── */
+    #armoury {
+      background:
+        radial-gradient(ellipse 50% 80% at 100% 50%, rgba(30,51,32,0.2) 0%, transparent 70%),
+        var(--black);
+      padding: 8rem 4rem;
+      flex-direction: column;
+    }
+    .armoury-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .weapon-card {
+      border: 1px solid rgba(200,146,42,0.15);
+      background: rgba(14,26,14,0.4);
+      padding: 2rem 1rem;
+      text-align: center;
+      position: relative;
+      transition: border-color 0.4s, background 0.4s;
+      overflow: hidden;
+    }
+    .weapon-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(200,146,42,0.05) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .weapon-card:hover { border-color: rgba(200,146,42,0.5); background: rgba(45,74,45,0.3); }
+    .weapon-card:hover::before { opacity: 1; }
+    .weapon-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+      filter: grayscale(0.3);
+    }
+    .weapon-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--parchment);
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+    .weapon-tier {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.75rem;
+      color: var(--gold);
+    }
+
+    /* ── Quests ── */
+    #quests {
+      background:
+        radial-gradient(ellipse 70% 60% at 30% 80%, rgba(45,74,45,0.2) 0%, transparent 60%),
+        var(--deep-green);
+      padding: 8rem 4rem;
+      flex-direction: column;
+    }
+    .quests-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .quest-card {
+      border: 1px solid rgba(200,146,42,0.15);
+      background: rgba(8,12,8,0.6);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s, border-color 0.4s;
+    }
+    .quest-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(200,146,42,0.4);
+    }
+    .quest-card-top {
+      height: 180px;
+      background: linear-gradient(160deg, var(--forest) 0%, var(--deep-green) 100%);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .quest-card-top::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(8,12,8,0.8) 100%);
+    }
+    .quest-glyph {
+      font-size: 4rem;
+      opacity: 0.15;
+      user-select: none;
+    }
+    .quest-card-body {
+      padding: 1.8rem;
+    }
+    .quest-status {
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+    .quest-name {
+      font-family: 'IM Fell English', serif;
+      font-size: 1.5rem;
+      color: var(--text-main);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .quest-desc {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-dim);
+      margin-bottom: 1.5rem;
+    }
+    .quest-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .quest-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--parchment);
+      border: 1px solid rgba(200,164,154,0.2);
+      padding: 0.3rem 0.7rem;
+    }
+    .quest-link {
+      display: block;
+      margin-top: 1.5rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .quest-link:hover { color: #fff; }
+
+    /* ── Send Word (Contact) ── */
+    #contact {
+      background:
+        radial-gradient(ellipse 60% 80% at 50% 100%, rgba(30,51,32,0.4) 0%, transparent 60%),
+        var(--black);
+      padding: 8rem 4rem;
+      flex-direction: column;
+      text-align: center;
+    }
+    .contact-verse {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      color: var(--parchment);
+      opacity: 0.6;
+      max-width: 540px;
+      margin: 0 auto 3.5rem;
+      line-height: 1.8;
+    }
+    .contact-links {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 4rem;
+    }
+    .contact-link {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(200,146,42,0.2);
+      padding-bottom: 0.3rem;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .contact-link:hover { color: var(--gold-light); border-color: var(--gold-light); }
+    .contact-email {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      border: 1px solid rgba(200,146,42,0.35);
+      padding: 1.2rem 3rem;
+      text-decoration: none;
+      transition: background 0.4s, color 0.4s;
+    }
+    .contact-email:hover {
+      background: rgba(200,146,42,0.1);
+      color: #fff;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(200,146,42,0.08);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p {
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    /* ── Scroll reveal base ── */
+    .reveal { opacity: 0; transform: translateY(30px); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.5rem 2rem; }
+      .nav-links { display: none; }
+      #about, #armoury, #quests, #contact { padding: 5rem 2rem; }
+      .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .about-portrait { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- Intertitle overlay -->
+  <div class="intertitle" id="intertitle">
+    <span id="intertitle-text"></span>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="main-nav" style="opacity:0">
+    <a href="#hero" class="nav-sigil">⚔</a>
+    <ul class="nav-links">
+      <li><a href="#about">The Knight</a></li>
+      <li><a href="#armoury">The Armoury</a></li>
+      <li><a href="#quests">Quests</a></li>
+      <li><a href="#contact">Send Word</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section id="hero">
+    <div class="mist-layer">
+      <div class="mist-blob mist-blob-1" id="mist1"></div>
+      <div class="mist-blob mist-blob-2" id="mist2"></div>
+      <div class="mist-blob mist-blob-3" id="mist3"></div>
+      <div class="mist-blob mist-blob-4" id="mist4"></div>
+    </div>
+    <div class="vignette"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow" id="hero-eyebrow">Fullstack Engineer · Craftsman of the Web</p>
+      <h1 class="hero-name" id="hero-name">Your Name</h1>
+      <p class="hero-title" id="hero-title">Builder of systems. Teller of stories through code.</p>
+      <div class="ornament" id="hero-ornament">
+        <div class="ornament-line"></div>
+        <div class="ornament-diamond"></div>
+        <div class="ornament-line"></div>
+      </div>
+      <a href="#about" class="hero-cta" id="hero-cta">Begin the Chronicle</a>
+    </div>
+    <div class="scroll-hint" id="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="about-portrait reveal">
+        <div class="portrait-frame">
+          <span class="portrait-placeholder">✦</span>
+          <span class="portrait-caption">Your portrait here</span>
+        </div>
+      </div>
+      <div class="about-text">
+        <div class="section-header" style="text-align:left; padding-bottom:2rem;">
+          <span class="section-eyebrow">I. The Knight</span>
+          <h2 class="section-title reveal">Of the Engineer</h2>
+          <div class="section-rule reveal" style="justify-content:flex-start;">
+            <div class="section-rule-line"></div>
+            <div class="section-rule-dot"></div>
+          </div>
+        </div>
+        <p class="reveal">A fullstack engineer with a keen eye for craft — equally at home architecting robust backends as shaping the interfaces through which people experience the world. With over <em>X years</em> in the field, every project is approached as a problem worth solving well.</p>
+        <p class="reveal">The belief here is simple: technology should feel inevitable — as though it could not have been built any other way. That is the standard held for every line of code, every interface, every system designed.</p>
+        <p class="reveal" style="font-family:'IM Fell English', serif; font-style:italic; color: var(--parchment); font-size:1.1rem; border-left: 2px solid rgba(200,146,42,0.3); padding-left: 1.5rem; margin-top: 2rem;">"The work is the proof. The code, the chronicle."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ARMOURY ── -->
+  <section id="armoury">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">II. The Armoury</span>
+      <h2 class="section-title">Weapons of the Craft</h2>
+      <div class="section-rule">
+        <div class="section-rule-line rev"></div>
+        <div class="section-rule-dot"></div>
+        <div class="section-rule-line"></div>
+      </div>
+    </div>
+    <div class="armoury-grid">
+      <div class="weapon-card reveal"><span class="weapon-icon">⚛️</span><span class="weapon-name">React</span><span class="weapon-tier">Master-forged</span></div>
+      <div class="weapon-card reveal"><span class="weapon-icon">🟢</span><span class="weapon-name">Node.js</span><span class="weapon-tier">Battle-tested</span></div>
+      <div class="weapon-card reveal"><span class="weapon-icon">🐘</span><span class="weapon-name">PostgreSQL</span><span class="weapon-tier">Stone-hewn</span></div>
+      <div class="weapon-card reveal"><span class="weapon-icon">▲</span><span class="weapon-name">Next.js</span><span class="weapon-tier">Master-forged</span></div>
+      <div class="weapon-card reveal"><span class="weapon-icon">🐳</span><span class="weapon-name">Docker</span><span class="weapon-tier">Hardened</span></div>
+      <div class="weapon-card reveal"><span class="weapon-icon">☁️</span><span class="weapon-name">AWS</span><span class="weapon-tier">Battle-tested</span></div>
+      <div class="weapon-card reveal"><span class="weapon-icon">🦀</span><span class="weapon-name">TypeScript</span><span class="weapon-tier">Master-forged</span></div>
+      <div class="weapon-card reveal"><span class="weapon-icon">🔴</span><span class="weapon-name">Redis</span><span class="weapon-tier">Swift & keen</span></div>
+    </div>
+  </section>
+
+  <!-- ── QUESTS ── -->
+  <section id="quests">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">III. The Quests</span>
+      <h2 class="section-title">Chronicles of Work</h2>
+      <div class="section-rule">
+        <div class="section-rule-line rev"></div>
+        <div class="section-rule-dot"></div>
+        <div class="section-rule-line"></div>
+      </div>
+    </div>
+    <div class="quests-grid">
+      <div class="quest-card reveal">
+        <div class="quest-card-top"><span class="quest-glyph">⚔</span></div>
+        <div class="quest-card-body">
+          <span class="quest-status">✦ Completed Quest</span>
+          <h3 class="quest-name">Project Longbow</h3>
+          <p class="quest-desc">A real-time analytics platform handling millions of events daily — built for precision, speed, and resilience under siege.</p>
+          <div class="quest-stack">
+            <span class="quest-tag">Next.js</span>
+            <span class="quest-tag">Node</span>
+            <span class="quest-tag">Kafka</span>
+            <span class="quest-tag">PostgreSQL</span>
+          </div>
+          <a href="#" class="quest-link">Read the Chronicle →</a>
+        </div>
+      </div>
+      <div class="quest-card reveal">
+        <div class="quest-card-top"><span class="quest-glyph">🏰</span></div>
+        <div class="quest-card-body">
+          <span class="quest-status">✦ Completed Quest</span>
+          <h3 class="quest-name">The Citadel</h3>
+          <p class="quest-desc">A multi-tenant SaaS platform with fine-grained role-based access — a fortified architecture built to scale without compromise.</p>
+          <div class="quest-stack">
+            <span class="quest-tag">React</span>
+            <span class="quest-tag">GraphQL</span>
+            <span class="quest-tag">AWS</span>
+            <span class="quest-tag">Redis</span>
+          </div>
+          <a href="#" class="quest-link">Read the Chronicle →</a>
+        </div>
+      </div>
+      <div class="quest-card reveal">
+        <div class="quest-card-top"><span class="quest-glyph">🌿</span></div>
+        <div class="quest-card-body">
+          <span class="quest-status">✦ Ongoing Quest</span>
+          <h3 class="quest-name">The Green Road</h3>
+          <p class="quest-desc">An open-source developer toolchain — built in the open, for the craft. A contribution to those who follow the same road.</p>
+          <div class="quest-stack">
+            <span class="quest-tag">TypeScript</span>
+            <span class="quest-tag">Docker</span>
+            <span class="quest-tag">GitHub Actions</span>
+          </div>
+          <a href="#" class="quest-link">Read the Chronicle →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section id="contact">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">IV. The Raven</span>
+      <h2 class="section-title">Send Word</h2>
+      <div class="section-rule">
+        <div class="section-rule-line rev"></div>
+        <div class="section-rule-dot"></div>
+        <div class="section-rule-line"></div>
+      </div>
+    </div>
+    <p class="contact-verse reveal">
+      Whether you bring a new quest, a collaboration, or simply wish to speak of the craft — the fire is lit and the hall is open.
+    </p>
+    <div class="contact-links reveal">
+      <a href="#" class="contact-link">GitHub</a>
+      <a href="#" class="contact-link">LinkedIn</a>
+      <a href="#" class="contact-link">Read.cv</a>
+    </div>
+    <a href="#" class="contact-email reveal" id="contact-email-link">your&#64;email&#46;com</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© MMXXVI · Your Name · All rights reserved</p>
+    <p>Crafted with intent</p>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+    // ── Reconstruct email at runtime to avoid bot/CDN obfuscation ──
+    (function() {
+      const el = document.getElementById('contact-email-link');
+      if (el) {
+        const u = 'your', d = 'email.com';
+        el.href = 'mailto:' + u + '@' + d;
+        el.textContent = u + '@' + d;
+      }
+    })();
+
+    // ── Mist drift animations ──
+    gsap.to('#mist1', { x: '12vw', y: '-4vh', duration: 18, ease: 'sine.inOut', repeat: -1, yoyo: true });
+    gsap.to('#mist2', { x: '-9vw', y: '-6vh', duration: 22, ease: 'sine.inOut', repeat: -1, yoyo: true, delay: 3 });
+    gsap.to('#mist3', { x: '6vw',  y:  '5vh', duration: 26, ease: 'sine.inOut', repeat: -1, yoyo: true, delay: 6 });
+    gsap.to('#mist4', { x: '-7vw', y: '-3vh', duration: 20, ease: 'sine.inOut', repeat: -1, yoyo: true, delay: 1 });
+
+    // ── Cursor ──
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function animateCursor() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+    document.querySelectorAll('a, button, .weapon-card').forEach(el => {
+      el.addEventListener('mouseenter', () => { gsap.to(cursor, { width:18, height:18, duration:.2 }); gsap.to(ring, { width:56, height:56, borderColor:'rgba(200,146,42,0.7)', duration:.2 }); });
+      el.addEventListener('mouseleave', () => { gsap.to(cursor, { width:10, height:10, duration:.2 }); gsap.to(ring, { width:36, height:36, borderColor:'rgba(200,146,42,0.4)', duration:.2 }); });
+    });
+
+    // ── Intertitle intro ──
+    const intertitle = document.getElementById('intertitle');
+    const intertitleText = document.getElementById('intertitle-text');
+    const tl = gsap.timeline();
+    tl.set(intertitleText, { text: '' })
+      .to(intertitleText, { duration: 1.2, text: 'The Chronicle', ease: 'none', delay: 0.3 })
+      .to(intertitle, { opacity: 0, duration: 1.2, delay: 0.8, ease: 'power2.in',
+        onComplete: () => { intertitle.style.display = 'none'; }
+      })
+      .to('#main-nav', { opacity: 1, duration: 0.8 }, '-=0.4')
+      .to('#hero-eyebrow', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.4')
+      .from('#hero-name', { opacity: 0, y: 40, duration: 1.4, ease: 'power3.out',
+        onStart: () => gsap.set('#hero-name', { opacity: 1 }) }, '-=0.6')
+      .to('#hero-name', { opacity: 1, duration: 0 }, '<')
+      .to('#hero-title', { opacity: 0.7, y: 0, duration: 1, ease: 'power2.out' }, '-=0.8')
+      .to('#hero-ornament', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.5')
+      .to('#hero-cta', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.4')
+      .to('#scroll-hint', { opacity: 1, duration: 0.8 }, '-=0.2');
+
+    // ── Scroll reveals ──
+    gsap.utils.toArray('.reveal').forEach(el => {
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+
+    // ── Armoury stagger ──
+    gsap.from('.weapon-card', {
+      opacity: 0, y: 40, stagger: 0.08, duration: 0.9, ease: 'power3.out',
+      scrollTrigger: { trigger: '.armoury-grid', start: 'top 80%' }
+    });
+
+    // ── Quest cards stagger ──
+    gsap.from('.quest-card', {
+      opacity: 0, y: 60, stagger: 0.15, duration: 1, ease: 'power3.out',
+      scrollTrigger: { trigger: '.quests-grid', start: 'top 80%' }
+    });
+
+  </script>
+</body>
+</html>
