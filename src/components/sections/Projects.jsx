@@ -12,7 +12,7 @@ const data = [
       { name: "CSS" },
     ],
     link: `https://directdevelopment.com/`,
-    imageURL: "",
+    imageURL: "/images/direct-development.png",
   },
   {
     questCompleted: true,
@@ -25,7 +25,7 @@ const data = [
       { name: "CSS" },
     ],
     link: `https://bayadaeducation.org/`,
-    imageURL: "",
+    imageURL: "/images/bayada-education.png",
   },
   {
     questCompleted: true,
@@ -38,7 +38,7 @@ const data = [
       { name: "CSS" },
     ],
     link: `https://www.missionhurst.org/mercyworks`,
-    imageURL: "",
+    imageURL: "/images/mercywork.png",
   },
   {
     questCompleted: true,
@@ -50,8 +50,8 @@ const data = [
       { name: "React" },
       { name: "Node" },
     ],
-    link: `https://dbss-client.vercel.app/`,
-    imageURL: "",
+    link: `https://dbss-client-3wvs7kmop.vercel.app/`,
+    imageURL: "/images/dbss.png",
   },
   {
     questCompleted: false,
@@ -64,7 +64,7 @@ const data = [
       { name: "Node" },
     ],
     link: `https://yelpcamp-pi-seven.vercel.app/`,
-    imageURL: "",
+    imageURL: "/images/yelpcamp.png",
   },
 ];
 

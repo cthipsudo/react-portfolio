@@ -1,6 +1,26 @@
+import { useEffect, useState } from "react";
 import "./About.css";
 
+const imgArr = [
+  "public/images/headshot-cropped.webp",
+  "public/images/oscar-bigfoot.webp",
+  "public/images/oscar-drummer.webp",
+  "public/images/oscar-monkey.webp",
+  "public/images/oscar-smirk.webp",
+  "public/images/oscar-squid.webp",
+];
+
 export default function About() {
+  const [oscarHeadshot, setOscarHeadshot] = useState(
+    "public/images/headshot-cropped.webp",
+  );
+  useEffect(() => {
+    const index = Math.floor(Math.random() * imgArr.length);
+    const randPhoto = imgArr[index];
+    console.log(randPhoto);
+    console.log(index);
+    setOscarHeadshot(randPhoto);
+  }, []);
   return (
     <section id="about">
       <div className="about-inner">
@@ -8,8 +28,8 @@ export default function About() {
           <div className="portrait-frame">
             <img
               className="h-full object-cover"
-              src="/images/headshot-cropped.webp"
-              alt="oscar-headshot"
+              src={oscarHeadshot}
+              alt="oscar-random-headshot"
             />
           </div>
         </div>

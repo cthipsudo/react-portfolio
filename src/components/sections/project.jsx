@@ -6,12 +6,17 @@ export default function Project({
   description,
   tags,
   link,
+  imageURL,
 }) {
-  console.log(tags);
+  // console.log(tags);
   return (
     <div className="quest-card">
       <div className="quest-card-top">
-        <span className="quest-glyph">🌿</span>
+        {imageURL ? (
+          <img src={imageURL} alt="project-image" />
+        ) : (
+          <span className="quest-glyph">🌿</span>
+        )}
       </div>
       <div className="quest-card-body">
         <span className="quest-status">
