@@ -1,0 +1,16 @@
+/* ── Footer ── */
+footer {
+  background: var(--black);
+  border-top: 1px solid rgba(200, 146, 42, 0.08);
+  padding: 2rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+footer p {
+  font-family: "Cinzel", serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
