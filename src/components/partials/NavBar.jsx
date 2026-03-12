@@ -73,14 +73,14 @@ const IOSSwitch = styled((props) => (
 
 const links = [
   { id: 1, text: "About", link: "#about" },
-  { id: 2, text: "Skills", link: "#skills" },
-  { id: 3, text: "Projects", link: "#projects" },
+  { id: 2, text: "Skills", link: "#armoury" },
+  { id: 3, text: "Projects", link: "#quests" },
   { id: 4, text: "Contact", link: "#contact" },
 ];
 const knightLinks = [
   { id: 1, text: "The Knight", link: "#about" },
-  { id: 2, text: "The Armoury", link: "#skills" },
-  { id: 3, text: "Quests", link: "#projects" },
+  { id: 2, text: "The Armoury", link: "#armoury" },
+  { id: 3, text: "Quests", link: "#quests" },
   { id: 4, text: "Send Word", link: "#contact" },
 ];
 

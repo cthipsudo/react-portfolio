@@ -13,13 +13,15 @@ export default function Project({
   // console.log(tags);
   return (
     <div className="quest-card">
-      <div className="quest-card-top">
-        {imageURL ? (
-          <img src={imageURL} alt="project-image" />
-        ) : (
-          <span className="quest-glyph">🌿</span>
-        )}
-      </div>
+      <a href={link}>
+        <div className="quest-card-top">
+          {imageURL ? (
+            <img src={imageURL} alt="project-image" />
+          ) : (
+            <span className="quest-glyph">🌿</span>
+          )}
+        </div>
+      </a>
       <div className="quest-card-body">
         <span className="quest-status">
           ✦ {questCompleted ? "Completed" : "Ongoing"}
