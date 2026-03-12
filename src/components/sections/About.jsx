@@ -28,7 +28,7 @@ export default function About() {
           <p>
             A fullstack engineer with a keen eye for craft — equally at home
             architecting robust backends as shaping the interfaces through which
-            people experience the world. With over <em>X years</em> in the
+            people experience the world. With over <em>8 years</em> in the
             field, every project is approached as a problem worth solving well.
           </p>
           <p>
