@@ -9,7 +9,7 @@ const Cursor = () => {
   document.addEventListener("mousemove", (e) => {
     updateMX(e.clientX);
     updateMY(e.clientY);
-    console.log("mx:", mx);
+    //console.log("mx:", mx);
 
     updateRX((pos) => (pos += (mx - pos) * 0.12));
     updateRY((pos) => (pos += (my - pos) * 0.12));

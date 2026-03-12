@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useKnightMode } from "../context/KnightModeContext";
+
 import "./About.css";
 
 const imgArr = [
@@ -14,11 +16,10 @@ export default function About() {
   const [oscarHeadshot, setOscarHeadshot] = useState(
     "images/headshot-cropped.webp",
   );
+  const { knightMode, setKnightMode } = useKnightMode();
   useEffect(() => {
     const index = Math.floor(Math.random() * imgArr.length);
     const randPhoto = imgArr[index];
-    console.log(randPhoto);
-    console.log(index);
     setOscarHeadshot(randPhoto);
   }, []);
   return (
@@ -35,8 +36,12 @@ export default function About() {
         </div>
         <div className="about-text">
           <div className="section-header">
-            <span className="section-eyebrow">I. The Knight</span>
-            <h2 className="section-title ">Of the Engineer</h2>
+            <span className="section-eyebrow">
+              {knightMode ? "I. The Knight" : "About me"}
+            </span>
+            <h2 className="section-title ">
+              {knightMode ? "Of the Engineer" : "My Story"}
+            </h2>
             <div
               className="section-rule "
               style={{ justifyContent: "flex-start" }}

@@ -1,6 +1,8 @@
+import { useKnightMode } from "../context/KnightModeContext";
 import "./Hero.css";
 
 export default function Hero() {
+  const { knightMode, setKnightMode } = useKnightMode();
   return (
     <section id="hero" className="h-dvh">
       <div className="hero-content">
@@ -19,7 +21,7 @@ export default function Hero() {
           <div className="ornament-line"></div>
         </div>
         <a href="#about" className="hero-cta" id="hero-cta">
-          Begin his Chronicle
+          {knightMode ? "Begin my Chronicle" : "Read more"}
         </a>
       </div>
       <div className="scroll-hint" id="scroll-hint">

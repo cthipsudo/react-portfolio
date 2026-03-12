@@ -1,3 +1,4 @@
+import { useKnightMode } from "../context/KnightModeContext";
 import ProjectTag from "./ProjectTag";
 
 export default function Project({
@@ -8,6 +9,7 @@ export default function Project({
   link,
   imageURL,
 }) {
+  const { knightMode, setKnightMode } = useKnightMode();
   // console.log(tags);
   return (
     <div className="quest-card">
@@ -20,7 +22,8 @@ export default function Project({
       </div>
       <div className="quest-card-body">
         <span className="quest-status">
-          ✦ {questCompleted ? "Completed" : "Ongoing"} Quest
+          ✦ {questCompleted ? "Completed" : "Ongoing"}
+          {knightMode ? " Quest" : " Project"}
         </span>
         <h3 className="quest-name">{name}</h3>
         <p className="quest-desc">{description}</p>
@@ -30,7 +33,7 @@ export default function Project({
           ))}
         </div>
         <a href={link} className="quest-link">
-          Visit the Chronicle →
+          Visit the {knightMode ? "Chronicle" : "Site"} →
         </a>
       </div>
     </div>

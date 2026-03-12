@@ -9,9 +9,11 @@ import Footer from "./components/partials/Footer";
 
 import "./App.css";
 
+import { KnightModeProvider } from "./components/context/KnightModeContext";
+
 function App() {
   return (
-    <>
+    <KnightModeProvider>
       <AnimatedCursor
         innerSize={8}
         outerSize={35}
@@ -33,7 +35,7 @@ function App() {
       <Projects />
       <Contact />
       <Footer />
-    </>
+    </KnightModeProvider>
   );
 }
 

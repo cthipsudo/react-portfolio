@@ -1,5 +1,6 @@
 import "./Projects.css";
 import Project from "./project";
+import { useKnightMode } from "../context/KnightModeContext";
 const data = [
   {
     questCompleted: true,
@@ -69,11 +70,16 @@ const data = [
 ];
 
 export default function Projects() {
+  const { knightMode, setKnightMode } = useKnightMode();
   return (
     <section id="quests">
       <div className="section-header">
-        <span className="section-eyebrow">III. The Quests</span>
-        <h2 className="section-title">Chronicles of Work</h2>
+        <span className="section-eyebrow">
+          {knightMode ? "III. The Quests" : "Experience"}
+        </span>
+        <h2 className="section-title">
+          {knightMode ? "Chronicles of Work" : "My Work and Projects"}
+        </h2>
         <div className="section-rule">
           <div className="section-rule-line rev"></div>
           <div className="section-rule-dot"></div>

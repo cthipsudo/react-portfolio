@@ -31,13 +31,15 @@ nav {
   color: var(--gold);
   letter-spacing: 0.2em;
   text-decoration: none;
+  opacity: 0;
 }
 .nav-links {
   display: flex;
   gap: 3rem;
   list-style: none;
 }
-.nav-links a {
+.nav-links a,
+.knightmode-label {
   font-family: "Cinzel", serif;
   font-size: 0.7rem;
   letter-spacing: 0.25em;
@@ -48,4 +50,10 @@ nav {
 }
 .nav-links a:hover {
   color: var(--gold-light);
+}
+
+/*- Knight Mode -*/
+
+.knightmode-container {
+  position: fixed;
 }
