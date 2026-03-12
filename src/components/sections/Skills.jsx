@@ -1,5 +1,5 @@
 import "./Skills.css";
-import Skill from "./skill";
+import Skill from "./Skill";
 
 /*
 Key: 
