@@ -12,8 +12,8 @@ import "./NavBar.css";
 const IOSSwitch = styled((props) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
 ))(({ theme }) => ({
-  width: 42,
-  height: 26,
+  width: 52,
+  height: 36,
   padding: 0,
   "& .MuiSwitch-switchBase": {
     padding: 0,
@@ -23,18 +23,14 @@ const IOSSwitch = styled((props) => (
       transform: "translateX(16px)",
       color: "transparent",
       "& + .MuiSwitch-track": {
-        backgroundColor: "#c8922a",
+        backgroundColor: "transparent",
         opacity: 1,
-        border: 0,
-        ...theme.applyStyles("dark", {
-          backgroundColor: "#2ECA45",
-        }),
+        "&::before": {
+          backgroundColor: "#c8922a",
+        },
       },
-      "&.Mui-disabled + .MuiSwitch-track": {
+      "&.Mui-disabled": {
         opacity: 0.5,
-      },
-      "& .MuiSwitch-thumb:before": {
-        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' fill='none'%3E%3Cpath fill='%239B9B9B' d='M29.85 2.15c.09.09.15.21.15.35v3.11c0 .25-.1.49-.28.66l-9.854 9.75-.373 1.537-1.56.376L20.5 19.5l1.57 2.57-2.28 1.53-3.793-3.752-4.167 4.122-1.9-1.9L19 11zM2.15 2.15 9 7.5l5.066 6.566L13.5 15.5l-1.37.523L2.28 6.28A.95.95 0 0 1 2 5.61V2.5c0-.14.06-.26.15-.35'/%3E%3Cpath fill='%23D3D3D3' d='M29.855 2.145A.5.5 0 0 0 29.5 2h-3.11c-.25 0-.49.1-.67.28l-9.717 9.827L6.28 2.28A.95.95 0 0 0 5.61 2H2.5a.5.5 0 0 0-.355.145l11.92 11.92L8.03 20.17l1.9 1.9zM22.07 22.07l-4.137-4.138 1.937-1.916 4.11 4.154z'/%3E%3Cpath fill='%23321B41' d='m3.66 26.44 1.9 1.9 5.32-5.32-1.9-1.9zM28.34 26.44l-1.9 1.9-5.32-5.32 1.9-1.9z'/%3E%3Cpath fill='%23635994' d='m2.4 27.71 1.9 1.9c.52.52 1.37.52 1.9 0s.53-1.37 0-1.9l-1.9-1.9c-.52-.53-1.37-.53-1.9 0-.53.52-.53 1.37 0 1.9M29.6 27.71l-1.9 1.9c-.52.52-1.37.52-1.9 0s-.53-1.37 0-1.9l1.9-1.9c.52-.53 1.37-.53 1.9 0 .53.52.53 1.37 0 1.9'/%3E%3Cpath fill='%23533566' d='M22.97 17.63c-.06-.2.09-.4.3-.4h2.12c.15 0 .28.1.31.25.43 2.26-.27 4.62-1.93 6.28a7 7 0 0 1-6.28 1.93.32.32 0 0 1-.25-.31v-2.12c0-.21.2-.36.4-.3 1.49.43 3.12.01 4.23-1.1a4.33 4.33 0 0 0 1.1-4.23M9.03 17.64a4.312 4.312 0 0 0 5.25 5.35c.2-.05.4.09.4.3v2.11c0 .15-.11.28-.26.31-2.23.4-4.55-.3-6.19-1.94a7 7 0 0 1-1.93-6.28c.03-.14.16-.25.31-.25h2.12c.21 0 .36.2.3.4'/%3E%3C/svg%3E");`,
       },
     },
     "&.Mui-focusVisible .MuiSwitch-thumb": {
@@ -56,8 +52,10 @@ const IOSSwitch = styled((props) => (
   },
   "& .MuiSwitch-thumb": {
     boxSizing: "border-box",
-    width: 22,
-    height: 22,
+    width: 35,
+    height: 35,
+    color: "transparent",
+    boxShadow: "none",
     "&::before": {
       content: "''",
       position: "absolute",
@@ -67,14 +65,13 @@ const IOSSwitch = styled((props) => (
       top: 0,
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center",
-      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
-        "#fff",
-      )}" d="M9.305 1.667V3.75h1.389V1.667h-1.39zm-4.707 1.95l-.982.982L5.09 6.072l.982-.982-1.473-1.473zm10.802 0L13.927 5.09l.982.982 1.473-1.473-.982-.982zM10 5.139a4.872 4.872 0 00-4.862 4.86A4.872 4.872 0 0010 14.862 4.872 4.872 0 0014.86 10 4.872 4.872 0 0010 5.139zm0 1.389A3.462 3.462 0 0113.471 10a3.462 3.462 0 01-3.473 3.472A3.462 3.462 0 016.527 10 3.462 3.462 0 0110 6.528zM1.665 9.305v1.39h2.083v-1.39H1.666zm14.583 0v1.39h2.084v-1.39h-2.084zM5.09 13.928L3.616 15.4l.982.982 1.473-1.473-.982-.982zm9.82 0l-.982.982 1.473 1.473.982-.982-1.473-1.473zM9.305 16.25v2.083h1.389V16.25h-1.39z"/></svg>')`,
+      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cpath fill='%23CCD6DD' d='m24 29 5-5L6 1H1v5z'/%3E%3Cpath fill='%239AAAB4' d='M1 1v5l23 23 2.5-2.5z'/%3E%3Cpath fill='%23D99E82' d='M33.424 32.808c.284-.284.458-.626.531-.968l-5.242-6.195-.701-.702c-.564-.564-1.57-.473-2.248.205l-.614.612c-.677.677-.768 1.683-.204 2.247l.741.741 6.15 5.205c.345-.072.688-.247.974-.532z'/%3E%3Cpath fill='%23BF6952' d='M33.424 32.808c.284-.284.458-.626.531-.968l-1.342-1.586-.737 3.684c.331-.077.661-.243.935-.518zm-3.31-5.506-.888 4.441 1.26 1.066.82-4.1zm-1.401-1.657-.701-.702a1.2 1.2 0 0 0-.326-.224l-.978 4.892 1.26 1.066.957-4.783zm-2.401-.888a2 2 0 0 0-.548.392l-.614.611a2 2 0 0 0-.511.86c-.142.51-.046 1.035.307 1.387l.596.596zq0-.002 0 0'/%3E%3Ccircle cx='33.25' cy='33.25' r='2.75' fill='%238A4633'/%3E%3Cpath fill='%23FFAC33' d='M29.626 22.324a1.033 1.033 0 0 1 0 1.462l-6.092 6.092a1.033 1.033 0 1 1-1.462-1.462l6.092-6.092a1.033 1.033 0 0 1 1.462 0'/%3E%3Ccircle cx='22.072' cy='29.877' r='1.75' fill='%23FFAC33'/%3E%3Ccircle cx='29.626' cy='22.323' r='1.75' fill='%23FFAC33'/%3E%3Ccircle cx='22.072' cy='29.877' r='1' fill='%23FFCC4D'/%3E%3Ccircle cx='29.626' cy='22.323' r='1' fill='%23FFCC4D'/%3E%3Cpath fill='%23FFAC33' d='M33.903 29.342a.76.76 0 0 1 0 1.078l-3.476 3.475a.762.762 0 1 1-1.078-1.078l3.476-3.475a.76.76 0 0 1 1.078 0'/%3E%3Cpath fill='%23CCD6DD' d='m12 29-5-5L30 1h5v5z'/%3E%3Cpath fill='%239AAAB4' d='M35 1v5L12 29l-2.5-2.5z'/%3E%3Cpath fill='%23D99E82' d='M2.576 32.808a1.95 1.95 0 0 1-.531-.968l5.242-6.195.701-.702c.564-.564 1.57-.473 2.248.205l.613.612c.677.677.768 1.683.204 2.247l-.741.741-6.15 5.205a1.95 1.95 0 0 1-.974-.532z'/%3E%3Cpath fill='%23BF6952' d='M2.576 32.808a1.95 1.95 0 0 1-.531-.968l1.342-1.586.737 3.684a1.93 1.93 0 0 1-.935-.518zm3.31-5.506.888 4.441-1.26 1.066-.82-4.1zm1.401-1.657.701-.702a1.2 1.2 0 0 1 .326-.224l.978 4.892-1.26 1.066-.957-4.783zm2.401-.888c.195.095.382.225.548.392l.613.612c.254.254.425.554.511.86.142.51.046 1.035-.307 1.387l-.596.596zq0-.002 0 0'/%3E%3Ccircle cx='2.75' cy='33.25' r='2.75' fill='%238A4633'/%3E%3Cpath fill='%23FFAC33' d='M6.374 22.324a1.033 1.033 0 0 0 0 1.462l6.092 6.092a1.033 1.033 0 1 0 1.462-1.462l-6.092-6.092a1.033 1.033 0 0 0-1.462 0'/%3E%3Ccircle cx='13.928' cy='29.877' r='1.75' fill='%23FFAC33'/%3E%3Ccircle cx='6.374' cy='22.323' r='1.75' fill='%23FFAC33'/%3E%3Ccircle cx='13.928' cy='29.877' r='1' fill='%23FFCC4D'/%3E%3Ccircle cx='6.374' cy='22.323' r='1' fill='%23FFCC4D'/%3E%3Cpath fill='%23FFAC33' d='M2.097 29.342a.76.76 0 0 0 0 1.078l3.476 3.475a.762.762 0 1 0 1.078-1.078l-3.476-3.475a.76.76 0 0 0-1.078 0'/%3E%3C/svg%3E");`,
     },
   },
   "& .MuiSwitch-track": {
     borderRadius: 26 / 2,
-    backgroundColor: "#E9E9EA",
+    backgroundColor: "unset",
+    // padding: "15px 0",
     opacity: 1,
     transition: theme.transitions.create(["background-color"], {
       duration: 500,
@@ -82,6 +79,17 @@ const IOSSwitch = styled((props) => (
     ...theme.applyStyles("dark", {
       backgroundColor: "#39393D",
     }),
+    "&::before": {
+      content: "''",
+      position: "absolute",
+      backgroundColor: "white",
+      borderRadius: 26 / 2,
+      width: "100%",
+      height: "50%",
+      margin: "auto",
+      top: 0,
+      bottom: 0,
+    },
   },
 }));
 
@@ -103,7 +111,7 @@ export default function NavBar() {
       className="nav-links flex flex-row justify-between p-5 px-10 my-auto mt-0 h-[100px]"
       ref={gsapRef}
     >
-      <a href="">x</a>
+      <a className="opacity-0">x</a>
       <ul className="flex flex-row gap-4">
         {links.map((link) => (
           <NavBarItem key={link.id} {...link} />
