@@ -13,16 +13,15 @@ export function KnightModeProvider({ children }) {
   const gsapRef = useRef(null);
 
   const toggleKnightMode = () => {
-    const split = SplitText.create(".normalSplit", { type: "lines" });
+    const split = SplitText.create(".knightSplit", { type: "lines" });
 
     gsap.to(split.lines, {
       y: -20,
       autoAlpha: 0,
-      stagger: 0.05,
       duration: 0.3,
       onComplete: () => {
         split.revert();
-        gsap.set(".normalSplit", { autoAlpha: 0 });
+        gsap.set(".knightSplit", { autoAlpha: 0 });
         setKnightMode((prev) => !prev); // then trigger entrance
       },
     });
@@ -30,9 +29,9 @@ export function KnightModeProvider({ children }) {
 
   useGSAP(
     () => {
-      gsap.set(".normalSplit", { autoAlpha: 1 });
+      gsap.set(".knightSplit", { autoAlpha: 1 });
 
-      const split = SplitText.create(".normalSplit", { type: "lines" });
+      const split = SplitText.create(".knightSplit", { type: "lines" });
 
       gsap.from(split.lines, {
         y: 20,
@@ -42,7 +41,7 @@ export function KnightModeProvider({ children }) {
       });
       return () => split.revert();
     },
-    { dependencies: [knightMode], scope: gsapRef },
+    { dependencies: [knightMode] },
   ); // animate in whenever knightMode changes
 
   return (

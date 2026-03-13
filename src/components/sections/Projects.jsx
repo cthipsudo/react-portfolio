@@ -74,10 +74,10 @@ export default function Projects() {
   return (
     <section id="quests">
       <div className="section-header">
-        <span className="section-eyebrow">
+        <span className="section-eyebrow knightSplit">
           {knightMode ? "III. The Quests" : "Experience"}
         </span>
-        <h2 className="section-title">
+        <h2 className="section-title knightSplit">
           {knightMode ? "Chronicles of Work" : "My Work and Projects"}
         </h2>
         <div className="section-rule">

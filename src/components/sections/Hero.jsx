@@ -2,7 +2,7 @@ import { useKnightMode } from "../context/KnightModeContext";
 import "./Hero.css";
 
 export default function Hero() {
-  const { knightMode, setKnightMode } = useKnightMode();
+  const { knightMode } = useKnightMode();
   return (
     <section id="hero" className="h-dvh">
       <div className="hero-content">
@@ -20,7 +20,11 @@ export default function Hero() {
           <div className="ornament-diamond"></div>
           <div className="ornament-line"></div>
         </div>
-        <a href="#about" className="hero-cta" id="hero-cta">
+        <a
+          href="#about"
+          className="knightSplit hero-cta w-[281px]"
+          id="hero-cta"
+        >
           {knightMode ? "Begin my Chronicle" : "Read more"}
         </a>
       </div>

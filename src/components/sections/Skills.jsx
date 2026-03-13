@@ -67,10 +67,10 @@ export default function Skills() {
   return (
     <section id="armoury">
       <div className="section-header">
-        <span className="section-eyebrow">
+        <span className="section-eyebrow knightSplit">
           {knightMode ? "II. The Armoury" : "Proficiencies"}
         </span>
-        <h2 className="section-title">
+        <h2 className="section-title knightSplit">
           {knightMode ? "Weapons of the Craft" : "Skills and Tools"}
         </h2>
         <div className="section-rule">

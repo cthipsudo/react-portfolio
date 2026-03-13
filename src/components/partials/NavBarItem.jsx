@@ -4,7 +4,7 @@ export default function NavBarItem({ link, knightText, text }) {
   const { knightMode } = useKnightMode();
   return (
     <li className="">
-      <a className={"normalSplit"} href={link}>
+      <a className={"knightSplit"} href={link}>
         {knightMode ? knightText : text}
       </a>
     </li>

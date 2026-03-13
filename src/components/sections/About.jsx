@@ -36,10 +36,10 @@ export default function About() {
         </div>
         <div className="about-text">
           <div className="section-header">
-            <span className="section-eyebrow">
+            <span className="section-eyebrow knightSplit">
               {knightMode ? "I. The Knight" : "About me"}
             </span>
-            <h2 className="section-title ">
+            <h2 className="section-title knightSplit">
               {knightMode ? "Of the Engineer" : "My Story"}
             </h2>
             <div

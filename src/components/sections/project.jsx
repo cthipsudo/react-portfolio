@@ -23,7 +23,7 @@ export default function Project({
         </div>
       </a>
       <div className="quest-card-body">
-        <span className="quest-status">
+        <span className="quest-status knightSplit">
           ✦ {questCompleted ? "Completed" : "Ongoing"}
           {knightMode ? " Quest" : " Project"}
         </span>
@@ -34,7 +34,7 @@ export default function Project({
             <ProjectTag key={i} name={t.name} />
           ))}
         </div>
-        <a href={link} className="quest-link">
+        <a href={link} className="quest-link knightSplit">
           Visit the {knightMode ? "Chronicle" : "Site"} →
         </a>
       </div>

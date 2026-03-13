@@ -7,10 +7,10 @@ export default function Contact() {
   return (
     <section id="contact">
       <div className="section-header">
-        <span className="section-eyebrow">
+        <span className="section-eyebrow knightSplit">
           {knightMode ? "IV. The Raven" : "Infomation"}
         </span>
-        <h2 className="section-title">
+        <h2 className="section-title knightSplit">
           {knightMode ? "Send Word" : "Contact"}
         </h2>
         <div className="section-rule">
