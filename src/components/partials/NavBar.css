@@ -58,3 +58,14 @@ nav {
 .knightmode-container {
   position: fixed;
 }
+
+@media screen and (max-width: 768px) {
+  nav {
+    background: linear-gradient(
+      to bottom,
+      rgba(8, 12, 8, 0.9) 0%,
+      rgba(8, 12, 8, 0.5) 75%,
+      transparent 100%
+    );
+  }
+}
