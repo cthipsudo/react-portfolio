@@ -1,7 +1,12 @@
-export default function NavBarItem({ link, text }) {
+import { useKnightMode } from "../context/KnightModeContext";
+
+export default function NavBarItem({ link, knightText, text }) {
+  const { knightMode } = useKnightMode();
   return (
-    <li>
-      <a href={link}>{text}</a>
+    <li className="">
+      <a className={"normalSplit"} href={link}>
+        {knightMode ? knightText : text}
+      </a>
     </li>
   );
 }

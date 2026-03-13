@@ -47,6 +47,7 @@ nav {
   color: var(--text-dim);
   text-decoration: none;
   transition: color 0.3s;
+  box-sizing: border-box;
 }
 .nav-links a:hover {
   color: var(--gold-light);

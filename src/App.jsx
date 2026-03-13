@@ -8,6 +8,7 @@ import Contact from "./components/sections/Contact";
 import Footer from "./components/partials/Footer";
 
 import "./App.css";
+import "./components/utilis/SplitText";
 
 import { KnightModeProvider } from "./components/context/KnightModeContext";
 

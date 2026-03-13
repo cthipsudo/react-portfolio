@@ -18,6 +18,8 @@
 
 #root {
   width: 100%;
+  font-kerning: none;
+  text-rendering: optimizeSpeed;
 }
 
 html {

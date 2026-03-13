@@ -2,12 +2,10 @@ import { styled } from "@mui/material/styles";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
+import { useKnightMode } from "../context/KnightModeContext";
 
 import NavBarItem from "./NavBarItem";
-
 import "./NavBar.css";
-import { useContext } from "react";
-import { useKnightMode } from "../context/KnightModeContext";
 
 // Consume anywhere without prop drilling
 
@@ -72,34 +70,28 @@ const IOSSwitch = styled((props) => (
 }));
 
 const links = [
-  { id: 1, text: "About", link: "#about" },
-  { id: 2, text: "Skills", link: "#armoury" },
-  { id: 3, text: "Projects", link: "#quests" },
-  { id: 4, text: "Contact", link: "#contact" },
-];
-const knightLinks = [
-  { id: 1, text: "The Knight", link: "#about" },
-  { id: 2, text: "The Armoury", link: "#armoury" },
-  { id: 3, text: "Quests", link: "#quests" },
-  { id: 4, text: "Send Word", link: "#contact" },
+  { id: 1, text: "About", link: "#about", knightText: "The Knight" },
+  { id: 2, text: "Skills", link: "#armoury", knightText: "The Armoury" },
+  { id: 3, text: "Projects", link: "#quests", knightText: "Quests" },
+  { id: 4, text: "Contact", link: "#contact", knightText: "Send Word" },
 ];
 
 export default function NavBar() {
-  const { knightMode, setKnightMode } = useKnightMode();
+  const { toggleKnightMode, gsapRef } = useKnightMode();
   const updateMode = (evt) => {
-    setKnightMode(evt.target.checked);
+    toggleKnightMode(evt.target.checked);
   };
   return (
     <nav
       id="main-nav"
-      className="nav-links flex flex-row justify-between p-5 px-10 my-auto mt-0"
+      className="nav-links flex flex-row justify-between p-5 px-10 my-auto mt-0 h-[100px]"
+      ref={gsapRef}
     >
       <a href="">x</a>
       <ul className="flex flex-row gap-4">
-        {knightMode
-          ? knightLinks.map((link) => <NavBarItem key={link.id} {...link} />)
-          : links.map((link) => <NavBarItem key={link.id} {...link} />)}
-        {}
+        {links.map((link) => (
+          <NavBarItem key={link.id} {...link} />
+        ))}
       </ul>
       <FormGroup className="knightmode-container">
         <FormControlLabel
