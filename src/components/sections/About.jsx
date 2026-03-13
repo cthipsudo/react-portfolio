@@ -16,7 +16,7 @@ export default function About() {
   const [oscarHeadshot, setOscarHeadshot] = useState(
     "images/headshot-cropped.webp",
   );
-  const { knightMode, setKnightMode } = useKnightMode();
+  const { knightMode } = useKnightMode();
   useEffect(() => {
     const index = Math.floor(Math.random() * imgArr.length);
     const randPhoto = imgArr[index];
@@ -42,12 +42,15 @@ export default function About() {
             <h2 className="section-title knightSplit">
               {knightMode ? "Of the Engineer" : "My Story"}
             </h2>
-            <div
-              className="section-rule "
-              style={{ justifyContent: "flex-start" }}
-            >
-              <div className="section-rule-line"></div>
-              <div className="section-rule-dot"></div>
+            <div className="section-rule about">
+              <div class="section-rule hideDesktop">
+                <div class="section-rule-line rev"></div>
+                <div class="section-rule-dot"></div>
+                <div class="section-rule-line"></div>
+              </div>
+
+              <div className="section-rule-line hideMobile"></div>
+              <div className="section-rule-dot hideMobile"></div>
             </div>
           </div>
           <p>

@@ -207,6 +207,9 @@ section {
   transform: rotate(45deg);
 }
 
+.hideDesktop {
+  display: none;
+}
 /* ── Scroll reveal base ── */
 .reveal {
   opacity: 0;
@@ -233,6 +236,12 @@ section {
     gap: 3rem;
   }
   .desktopOnly {
+    display: none;
+  }
+  .hideDesktop {
+    display: flex;
+  }
+  .hideMobile {
     display: none;
   }
 }
