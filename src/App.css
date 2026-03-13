@@ -232,6 +232,7 @@ section {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
-  .about-portrait {
+  .desktopOnly {
+    display: none;
   }
 }
