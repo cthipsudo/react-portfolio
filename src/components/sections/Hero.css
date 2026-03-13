@@ -117,3 +117,9 @@
     transform: scaleY(1.1);
   }
 }
+
+@media screen and (max-width: 768px) {
+  #hero .hero-content {
+    padding: 0 20px;
+  }
+}

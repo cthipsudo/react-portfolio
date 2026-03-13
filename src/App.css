@@ -218,20 +218,20 @@ section {
   nav {
     padding: 1.5rem 2rem;
   }
-  .nav-links {
+  .nav-links ul {
     display: none;
   }
   #about,
   #armoury,
   #quests,
   #contact {
-    padding: 5rem 2rem;
+    padding: 3rem 2rem;
+    margin-bottom: 0;
   }
   .about-inner {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
   .about-portrait {
-    display: none;
   }
 }

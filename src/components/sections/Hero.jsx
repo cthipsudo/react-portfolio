@@ -4,7 +4,7 @@ import "./Hero.css";
 export default function Hero() {
   const { knightMode } = useKnightMode();
   return (
-    <section id="hero" className="h-dvh">
+    <section id="hero" className="h-[80dvh] md:h-dvh">
       <div className="hero-content">
         <p className="hero-eyebrow" id="hero-eyebrow">
           Software Engineer · Part-Time Adventurer

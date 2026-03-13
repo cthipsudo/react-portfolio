@@ -57,3 +57,9 @@
   background: rgba(200, 146, 42, 0.1);
   color: #fff;
 }
+
+@media screen and (max-width: 768px) {
+  .contact-email {
+    font-size: 0.5rem;
+  }
+}
