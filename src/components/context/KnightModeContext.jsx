@@ -4,13 +4,16 @@ import { createContext, useContext, useState, useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { SplitText } from "gsap/SplitText";
+import useSound from "use-sound";
+import soundEffect from "/sounds/trumpet.mp3";
 
 const KnightModeContext = createContext();
 gsap.registerPlugin(useGSAP, SplitText);
 
 export function KnightModeProvider({ children }) {
   const [knightMode, setKnightMode] = useState(false);
-  const gsapRef = useRef(null);
+  const [soundPlayed, setSoundPlayed] = useState(false);
+  const [play] = useSound(soundEffect, { volume: 0.2 });
 
   const toggleKnightMode = () => {
     const split = SplitText.create(".knightSplit", { type: "lines" });
@@ -22,7 +25,11 @@ export function KnightModeProvider({ children }) {
       onComplete: () => {
         split.revert();
         gsap.set(".knightSplit", { autoAlpha: 0 });
-        setKnightMode((prev) => !prev); // then trigger entrance
+        setKnightMode((prev) => {
+          if (!soundPlayed) play();
+          setSoundPlayed(true);
+          return !prev;
+        }); // then trigger entrance
       },
     });
   };
@@ -45,9 +52,7 @@ export function KnightModeProvider({ children }) {
   ); // animate in whenever knightMode changes
 
   return (
-    <KnightModeContext.Provider
-      value={{ knightMode, toggleKnightMode, gsapRef }}
-    >
+    <KnightModeContext.Provider value={{ knightMode, toggleKnightMode }}>
       {children}
     </KnightModeContext.Provider>
   );
