@@ -61,7 +61,7 @@ const data = [
     tags: [
       { name: "MongoDB" },
       { name: "Express" },
-      { name: "React" },
+      { name: "EJS" },
       { name: "Node" },
     ],
     link: `https://yelpcamp-pi-seven.vercel.app/`,
@@ -70,7 +70,7 @@ const data = [
 ];
 
 export default function Projects() {
-  const { knightMode, setKnightMode } = useKnightMode();
+  const { knightMode } = useKnightMode();
   return (
     <section id="quests">
       <div className="section-header">
