@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+.MuiAppBar-root {
+  padding-top: env(safe-area-inset-top);
+}
+
 :root {
   --black: #080c08;
   --deep-green: #0e1a0e;
