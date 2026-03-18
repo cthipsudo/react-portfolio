@@ -10,10 +10,17 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { Links as navLinks } from "../../data/Links";
+import { FormGroup, FormControlLabel } from "@mui/material";
+import { IOSSwitch } from "./IOSSwitch";
+import { useKnightMode } from "../context/KnightModeContext";
 
 //const navLinks = ["Home", "About", "Projects", "Contact"];
 
 export default function MobileNavBar() {
+  const { toggleKnightMode } = useKnightMode();
+  const updateMode = (evt) => {
+    toggleKnightMode(evt.target.checked);
+  };
   const [open, setOpen] = useState(false);
 
   return (
@@ -25,7 +32,11 @@ export default function MobileNavBar() {
             "linear-gradient(180deg, var(--black) 100%, rgb(0,0,0,0.4) 0%)",
         }}
       >
-        <Toolbar>
+        <Toolbar
+          sx={{
+            justifyContent: "space-between",
+          }}
+        >
           <IconButton
             size="large"
             edge="start"
@@ -36,6 +47,13 @@ export default function MobileNavBar() {
           >
             <MenuIcon />
           </IconButton>
+          <FormGroup className="knightmode-container">
+            <FormControlLabel
+              className="knightmode-label"
+              control={<IOSSwitch sx={{ m: 1 }} onChange={updateMode} />}
+              label="Knight Mode"
+            />
+          </FormGroup>
         </Toolbar>
       </AppBar>
 

@@ -53,12 +53,6 @@ nav {
   color: var(--gold-light);
 }
 
-/*- Knight Mode -*/
-
-.knightmode-container {
-  position: fixed;
-}
-
 @media screen and (max-width: 768px) {
   nav {
     background: linear-gradient(
