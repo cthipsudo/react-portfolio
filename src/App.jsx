@@ -6,6 +6,7 @@ import Skills from "./components/sections/Skills";
 import Projects from "./components/sections/Projects";
 import Contact from "./components/sections/Contact";
 import Footer from "./components/partials/Footer";
+import MobileNavBar from "./components/partials/MobileNavBar";
 
 import "./App.css";
 import "./components/utilis/SplitText";
@@ -31,7 +32,7 @@ function App() {
           }}
         />
       </div>
-
+      <MobileNavBar />
       <NavBar />
       <Hero />
       <About />

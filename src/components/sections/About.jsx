@@ -18,9 +18,12 @@ export default function About() {
   );
   const { knightMode } = useKnightMode();
   useEffect(() => {
-    const index = Math.floor(Math.random() * imgArr.length);
-    const randPhoto = imgArr[index];
-    setOscarHeadshot(randPhoto);
+    async function loadPhoto() {
+      const index = Math.floor(Math.random() * imgArr.length);
+      const randPhoto = await imgArr[index];
+      await setOscarHeadshot(randPhoto);
+    }
+    loadPhoto();
   }, []);
   return (
     <section id="about">
@@ -43,10 +46,10 @@ export default function About() {
               {knightMode ? "Of the Engineer" : "My Story"}
             </h2>
             <div className="section-rule about">
-              <div class="section-rule hideDesktop">
-                <div class="section-rule-line rev"></div>
-                <div class="section-rule-dot"></div>
-                <div class="section-rule-line"></div>
+              <div className="section-rule hideDesktop">
+                <div className="section-rule-line rev"></div>
+                <div className="section-rule-dot"></div>
+                <div className="section-rule-line"></div>
               </div>
 
               <div className="section-rule-line hideMobile"></div>
