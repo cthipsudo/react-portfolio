@@ -159,6 +159,10 @@ section {
   transform: translateY(30px);
 }
 
+.knightmode-container {
+  position: fixed;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   body {
@@ -195,5 +199,8 @@ section {
 @media screen and (max-width: 899px) {
   nav.nav-links {
     display: none;
+  }
+  .knightmode-container {
+    position: relative;
   }
 }
